@@ -30,6 +30,13 @@ pub struct SortedList<T: Ord> {
 /// to any other item, as determined by the `Ord` trait, changes while it is in the heap. This is
 /// normally only possible through `Cell`, `RefCell`, global state, I/O, or unsafe code.
 impl<T: Ord> SortedList<T> {
+    pub fn new(load_factor: usize) -> Self {
+        SortedList {
+            lists: vec![Vec::new()],
+            load_factor,
+            len: 0,
+        }
+    }
     pub fn contains(&self, val: &T) -> bool {
         debug_assert!(!self.lists.is_empty());
 
@@ -222,11 +229,7 @@ impl<T: Ord> IntoIterator for SortedList<T> {
 
 impl<T: Ord> Default for SortedList<T> {
     fn default() -> Self {
-        SortedList::<T> {
-            lists: vec![Vec::new()],
-            load_factor: DEFAULT_LOAD_FACTOR,
-            len: 0,
-        }
+        SortedList::new(DEFAULT_LOAD_FACTOR)
     }
 }
 

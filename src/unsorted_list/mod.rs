@@ -12,6 +12,13 @@ pub struct UnsortedList<T> {
 }
 
 impl<T> UnsortedList<T> {
+    pub fn new(load_factor: usize) -> Self {
+        UnsortedList {
+            lists: vec![Vec::new()],
+            load_factor,
+            len: 0,
+        }
+    }
     pub fn insert(&mut self, mut i: usize, element: T) {
         let mut outer = 0;
         // biases towards the earlier list.
@@ -209,11 +216,7 @@ impl<T: Ord> IntoIterator for UnsortedList<T> {
 
 impl<T: Ord> Default for UnsortedList<T> {
     fn default() -> Self {
-        UnsortedList::<T> {
-            lists: vec![Vec::new()],
-            load_factor: DEFAULT_LOAD_FACTOR,
-            len: 0,
-        }
+        UnsortedList::new(DEFAULT_LOAD_FACTOR)
     }
 }
 
